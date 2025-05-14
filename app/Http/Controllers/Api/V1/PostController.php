@@ -10,12 +10,13 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    private const PER_PAGE = 10;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return PostResource::collection(Post::with('category')->get());
+        return PostResource::collection(Post::with('category')->paginate(self::PER_PAGE));
     }
 
     /**
