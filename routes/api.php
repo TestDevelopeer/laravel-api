@@ -9,7 +9,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('v1')->middleware(['throttle:api_limiter'])->group(function () {
+Route::prefix('v1')->middleware(['throttle:api_limiter', 'auth:sanctum'])->group(function () {
    Route::apiResource('categories', CategoryController::class);
    Route::apiResource('posts', PostController::class);
 });
