@@ -7,6 +7,7 @@ use App\Http\Requests\V1\LoginUserRequest;
 use App\Http\Requests\V1\StoreUserRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\V1\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -16,7 +17,7 @@ class AuthController extends Controller
         return User::create($request->all());
     }
 
-    public function login(LoginUserRequest $request)
+    public function login(LoginUserRequest $request): JsonResponse
     {
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return response()->json([
@@ -33,8 +34,12 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
+        Auth::user()->currentAccessToken()->delete();
 
+        return response()->json([
+            'message' => 'Logged out'
+        ]);
     }
 }
