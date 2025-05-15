@@ -43,6 +43,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post): PostResource
     {
         $post->update($request->all());
+
         return new PostResource($post);
     }
 
@@ -52,6 +53,7 @@ class PostController extends Controller
     public function destroy(Post $post): JsonResponse
     {
         $post->delete();
+
         return response()->json([
             'message' => 'Post deleted successfully'
         ]);

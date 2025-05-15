@@ -42,6 +42,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category): CategoryResource
     {
         $category->update($request->all());
+
         return new CategoryResource($category);
     }
 
@@ -51,6 +52,7 @@ class CategoryController extends Controller
     public function destroy(Category $category): JsonResponse
     {
         $category->delete();
+
         return response()->json([
             'message' => 'Category deleted successfully'
         ]);
